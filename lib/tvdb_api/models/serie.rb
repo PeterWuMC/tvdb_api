@@ -32,7 +32,7 @@ module TvdbApi
     }
 
     class << self
-      def find_by_name(name, language=nil)
+      def find_all_by_name(name, language=nil)
         query = {}.tap do |query|
           query[:seriesname] = name
           query[:language]   = language.abbreviation if language.is_a?(TvdbApi::Language)
