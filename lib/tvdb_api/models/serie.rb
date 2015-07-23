@@ -1,5 +1,5 @@
 module TvdbApi
-  class Serie
+  class Serie < Base
 
     ATTRIBUTES_MAPPING = {
       'seriesid'       => 'id',
@@ -74,29 +74,14 @@ module TvdbApi
       end
     end
 
-    ATTRIBUTES_MAPPING.values.uniq.each do |attribute_name|
-      define_method attribute_name do
-        mass_setter(self.class.find_by_id(@id, @language).raw) if instance_variable_get("@#{attribute_name}").nil?
-        instance_variable_get("@#{attribute_name}")
-      end
-    end
-
-    attr_reader :raw
-
-    def initialize(serie_hash)
-      @raw = serie_hash
-
-      mass_setter(serie_hash)
-    end
-
     private
     def mass_setter(serie_hash)
       @language = TvdbApi::Language.find_by_abbreviation(serie_hash.delete('language')) if serie_hash['language']
+      super(serie_hash)
+    end
 
-      ATTRIBUTES_MAPPING.each do |hash_key, attribute_name|
-        instance_variable_set("@#{attribute_name}", serie_hash[hash_key]) if serie_hash[hash_key]
-      end
-
+    def update_missing_data
+      mass_setter(self.class.find_by_id(@id, @language).raw)
     end
   end
 end
