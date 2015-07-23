@@ -23,9 +23,10 @@ module TvdbApi
       end
     end
 
-    attr_reader :name, :abbreviation, :id
+    attr_reader :name, :abbreviation, :id, :raw
 
     def initialize(language_hash)
+      @raw          = language_hash
       @name         = language_hash['name']
       @abbreviation = language_hash['abbreviation']
       @id           = language_hash['id']
