@@ -2,7 +2,9 @@ module TvdbApi
   class Language
     class << self
       def all
-        @languages ||= TvdbApi::Client.get_with_token('languages.xml').to_h['Languages']['Language']
+        @languages ||= TvdbApi::Client.get_with_token('languages.xml').to_h['Languages']['Language'].map do |language|
+          new(language)
+        end
       end
 
       def find_by_name(name)
@@ -19,7 +21,7 @@ module TvdbApi
 
       private
       def find_by(key, value)
-        new(all.detect {|language| language[key].to_s.downcase == value.to_s.downcase})
+        all.detect {|language| language.send(key).to_s.downcase == value.to_s.downcase}
       end
     end
 

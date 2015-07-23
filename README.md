@@ -19,9 +19,14 @@ And set the token in your application
 
 ###Language
 
-    TvdbApi::Language.find_by_name
-    TvdbApi::Language.find_by_abbreviation
-    TvdbApi::Language.find_by_id
+    TvdbApi::Language.find_by_name('English')
+    => #<TvdbApi::Language:0x007ffb96b043e0 @raw={"name"=>"English", "abbreviation"=>"en", "id"=>"7"}, @name="English", @abbreviation="en", @id="7">
+
+    TvdbApi::Language.find_by_abbreviation('en')
+    => #<TvdbApi::Language:0x007f86249f90c8 @raw={"name"=>"English", "abbreviation"=>"en", "id"=>"7"}, @name="English", @abbreviation="en", @id="7">
+
+    TvdbApi::Language.find_by_id(7)
+    => #<TvdbApi::Language:0x007f8624a00418 @raw={"name"=>"English", "abbreviation"=>"en", "id"=>"7"}, @name="English", @abbreviation="en", @id="7">
 
 ## Series
 
